@@ -4,7 +4,7 @@ class ReviewsController < ApplicationController
     @review = Review.new(review_params)
     @review.restaurant = @restaurant
     if @review.save
-      redirect_to restaurant_path(@restaurant)
+      redirect_to restaurant_path(@restaurant, anchor: "review-#{@review.id}")
     else
       render 'restaurants/show' #location of the form
     end

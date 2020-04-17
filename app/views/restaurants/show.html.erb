@@ -1,10 +1,12 @@
 <!-- app/views/restaurants/show.html.erb -->
 <h1><%= @restaurant.name %> <small><%= @restaurant.address %></small></h1>
+  <%= link_to "Delete", @restaurant, method: :delete, remote: true %>
+
 <h2>
   <%= pluralize @restaurant.reviews.size, "review" %>
 </h2>
 
-<%= simple_form_for([@restaurant,@review]) do |f|%>
+<%= simple_form_for([@restaurant,@review], remote: true) do |f|%>
   <%= f.input :content, as: :text %>
   <%= f.button :submit %>
 <% end %>
@@ -13,8 +15,8 @@
   <% if @restaurant.reviews.blank? %>
     Be the first to leave a review for <%= @restaurant.name %>
   <% else %>
-    <% @restaurant.reviews.each do |review| %>
-      <p><%= review.content %></p>
+    <% @restaurant.reviews.order(created_at: :desc).each do |review| %>
+      <p id="review-<%= review.id %>"><%= review.content %></p>
     <% end %>
   <% end %>
 </div>

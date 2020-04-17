@@ -1,5 +1,7 @@
 puts "Cleaning DB"
 
+Restaurant.destroy_all
+
 
 puts 'Creating restaurants...'
 Restaurant.create!({
